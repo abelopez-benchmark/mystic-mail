@@ -10,10 +10,12 @@ export class ChatGptService {
   baseUrl: string = 'https://api.openai.com/v1';
 
   apiKey: string = '';
+  gptModel: string = '';
   systemPrompt: string = '';
 
   constructor(private _http: HttpClient) {
     this.apiKey = environment.openAiApiKey;
+    this.gptModel = environment.openAiModel;
     this.systemPrompt = environment.systemPrompt;
   }
 
@@ -25,7 +27,7 @@ export class ChatGptService {
     );
 
     const payload = {
-      model: 'gpt-4-turbo-preview',
+      model: this.gptModel,
       messages: [
         {
           role: 'system',
