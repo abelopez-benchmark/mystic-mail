@@ -28,7 +28,7 @@
           </div>
 
           <p-button icon="pi pi-code" iconPos="right" label="Generate email" severity="primary" (click)="generateHtml()"
-            [disabled]="!uploadedImageUrl" [loading]="processingEmail"></p-button>
+            [disabled]="!uploadedImageUrl || analysisResult.length == 0" [loading]="processingEmail"></p-button>
         </div>
       </div>
     </div>
