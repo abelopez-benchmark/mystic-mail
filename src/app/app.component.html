@@ -1,30 +1,35 @@
-<div class="container p-2">
-  <div class="grid">
-    <div class="col-12">
-      <h2>MysticEmail PoC</h2>
+<div class="container p-2 m-0 surface-100" style="min-height: 100vh;">
+  <div class="grid p-0 m-0">
+    <div class="col-12 pb-0 pt-3">
+      <div class="surface-card py-2 px-6 m-0 shadow-2">
+        <h2>MysticEmail</h2>
+      </div>
     </div>
-    <div class="col-6">
-      <div class="flex flex-column justify-content-between align-items-center gap-6">
-        <h3>Upload your image</h3>
+    <div class="col-5">
+      <div class="surface-card p-5 shadow-2 border-round">
+        <div class="flex flex-column justify-content-between align-items-center gap-6">
 
-        <p-fileUpload name="data" [headers]="fileHeaders" [url]="url" method="post" (onUpload)="onUploadImage($event)">
-        </p-fileUpload>
+          <div class="upload_image_container">
+            <h4>Upload your image</h4>
+            <app-image-uploader (onImageUpload)="onUploadImage($event)"></app-image-uploader>
+          </div>
 
-        <h3>Image Preview:</h3>
-        <div class="flex flex-row justify-content-center align-items-center">
-          <p-image *ngIf="uploadedImageUrl" [src]="uploadedImageUrl" alt="uploaded image" height="250px"
-            [preview]="true"></p-image>
+          <div class="preview_image_container">
+            <h4>Image Preview:</h4>
+            <div class="flex flex-row justify-content-center align-items-center" style="height: 250px;">
+              <p-image *ngIf="uploadedImageUrl" [src]="uploadedImageUrl" alt="uploaded image" height="200px"
+                [preview]="true"></p-image>
+            </div>
+          </div>
+
+          <p-button icon="pi pi-code" iconPos="right" label="Generate email" severity="primary" (click)="generateHtml()"
+            [disabled]="!uploadedImageUrl" [loading]="processingEmail"></p-button>
         </div>
-
-        <p-button class="w-max" label="Generate email" severity="primary" (click)="generateHtml()"
-          [disabled]="!uploadedImageUrl" [loading]="processingEmail"></p-button>
       </div>
     </div>
-    <div class="col-6">
-      <h3>Email Preview</h3>
-      <div class="email_preview_container" [innerHTML]="htmlPreview">
-        <p>HTML Preview</p>
-      </div>
+    <div class="col-7">
+      <h4>Email Preview</h4>
+      <app-html-viewer [rawHtml]="rawHtml"></app-html-viewer>
     </div>
   </div>
 </div>

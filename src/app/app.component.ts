@@ -1,13 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
 import { ButtonModule } from 'primeng/button';
 import { ChatGptService } from './core/services/chat-gpt.service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { environment } from '../environments/environment';
+import { ImageUploaderComponent } from './shared/components/image-uploader/image-uploader.component';
+import { HtmlViewerComponent } from './shared/components/html-viewer/html-viewer.component';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +13,10 @@ import { environment } from '../environments/environment';
   imports: [
     RouterOutlet,
     CommonModule,
-    FileUploadModule,
     ImageModule,
     ButtonModule,
+    ImageUploaderComponent,
+    HtmlViewerComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -25,25 +24,15 @@ import { environment } from '../environments/environment';
 export class AppComponent {
   title = 'mysticmail';
 
-  bmeToken: string = '';
-  fileHeaders: HttpHeaders = new HttpHeaders();
-  url: string = 'https://clientapi.benchmarkemail.com/Images/';
   uploadedImageUrl: string | null = null;
 
-  htmlPreview: SafeHtml | null = null;
+  rawHtml: string = '';
   processingEmail: boolean = false;
 
-  constructor(
-    private _sanitizer: DomSanitizer,
-    private _chatgptService: ChatGptService
-  ) {
-    this.bmeToken = environment.bmeToken;
-    this.fileHeaders = this.fileHeaders.append('AuthToken', this.bmeToken);
-  }
+  constructor(private _chatgptService: ChatGptService) {}
 
-  onUploadImage(response: any) {
-    const url = response.originalEvent.body.Response.Detail;
-    this.uploadedImageUrl = url;
+  onUploadImage(imageUrl: string) {
+    this.uploadedImageUrl = imageUrl;
   }
 
   async generateHtml() {
@@ -52,6 +41,6 @@ export class AppComponent {
       this.uploadedImageUrl ?? ''
     );
     this.processingEmail = false;
-    this.htmlPreview = this._sanitizer.bypassSecurityTrustHtml(htmlEmail);
+    this.rawHtml = htmlEmail;
   }
 }
