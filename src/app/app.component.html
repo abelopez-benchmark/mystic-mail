@@ -1,13 +1,11 @@
 <div class="container p-2 m-0 surface-100" style="min-height: 100vh;">
   <div class="grid p-0 m-0">
-    <div class="col-12 pb-0 pt-3">
-      <div class="surface-card py-2 px-6 m-0 shadow-2">
-        <h2>MysticEmail</h2>
-      </div>
-    </div>
     <div class="col-5">
       <div class="surface-card p-5 shadow-2 border-round">
         <div class="flex flex-column justify-content-between align-items-center gap-2">
+          <div class="title_container">
+            <h3>MysticEmail</h3>
+          </div>
 
           <div class="upload_image_container">
             <h4>Upload your image</h4>
@@ -24,7 +22,7 @@
 
           <div class="analysis_image_container">
             <h4>Image Analysis Result:</h4>
-            <textarea pInputTextarea cols="70" rows="5" [(ngModel)]="analysisResult"></textarea>
+            <textarea pInputTextarea cols="55" rows="10" [(ngModel)]="analysisResult"></textarea>
           </div>
 
           <p-button icon="pi pi-code" iconPos="right" label="Generate email" severity="primary" (click)="generateHtml()"
@@ -32,9 +30,8 @@
         </div>
       </div>
     </div>
-    <div class="col-7">
-      <h4>Email Preview</h4>
-      <app-html-viewer [rawHtml]="rawHtml"></app-html-viewer>
-    </div>
+  </div>
+  <div class="col-7">
+    <app-html-viewer [rawHtml]="rawHtml"></app-html-viewer>
   </div>
 </div>
